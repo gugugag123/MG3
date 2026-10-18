@@ -397,6 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 3
   _rigidbody: {fileID: 136727593}
 --- !u!50 &136727593
 Rigidbody2D:
@@ -920,6 +921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 3
   _rigidbody: {fileID: 467747118}
 --- !u!50 &467747118
 Rigidbody2D:
@@ -2004,6 +2006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 3
   _rigidbody: {fileID: 1159248497}
 --- !u!50 &1159248497
 Rigidbody2D:
@@ -2188,6 +2191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 2
   _rigidbody: {fileID: 1204503447}
 --- !u!50 &1204503447
 Rigidbody2D:
@@ -2372,6 +2376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 1
   _rigidbody: {fileID: 1454549602}
 --- !u!50 &1454549602
 Rigidbody2D:
@@ -2731,6 +2736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 2
   _rigidbody: {fileID: 1812240369}
 --- !u!50 &1812240369
 Rigidbody2D:
@@ -2915,6 +2921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 1
   _rigidbody: {fileID: 1825545174}
 --- !u!50 &1825545174
 Rigidbody2D:
@@ -3390,6 +3397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kickable
   _player: {fileID: 1121706586}
   _inertia: 5
+  _pointValue: 1
   _rigidbody: {fileID: 2106242171}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

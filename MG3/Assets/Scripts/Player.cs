@@ -16,6 +16,22 @@ public class Player : MonoBehaviour
     private bool _facingLeft;
     private int _points;
 
+    private void Start()
+    {
+        var legend = Instantiate(_pointsText, _pointsText.transform.parent);
+        legend.name = "FoodScoreLegend";
+        legend.text = "Bagel / Wine: 1    Sushi / Chicken: 2    Steak: 3";
+        legend.fontSize = 20;
+        legend.alignment = TextAlignmentOptions.Center;
+        legend.raycastTarget = false;
+        legend.margin = Vector4.zero;
+        var rect = legend.rectTransform;
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
+        rect.pivot = new Vector2(0.5f, 0f);
+        rect.anchoredPosition = new Vector2(0f, 65f);
+        rect.sizeDelta = new Vector2(850f, 45f);
+    }
+
     // ------------------------------------------------------------------------
     private void Update()
     {
@@ -48,7 +64,7 @@ public class Player : MonoBehaviour
         }
 
         // Kick if the player presses space
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Kick();
         }
@@ -61,6 +77,10 @@ public class Player : MonoBehaviour
     // ------------------------------------------------------------------------
     public void SetGameOver ()
     {
+        _rigidbody.linearVelocity = Vector2.zero;
+        _leftKick.gameObject.SetActive(false);
+        _rightKick.gameObject.SetActive(false);
+        _animator.SetBool("walking", false);
         this.enabled = false;
     }
 
@@ -82,10 +102,12 @@ public class Player : MonoBehaviour
 
     // STEP 10 -----------------------------------------------------------------
     // This method is called when the player kicks a Kickable item.
-    public void IncreasePoints()
+    public void IncreasePoints(int amount = 1)
     {
-        // Inside this method, increase the value of _points by one,
-        // and update the _pointsText text with text displaying the new value of _points.
+        _points += Mathf.Clamp(amount, 1, 3);
+        _pointsText.text = "Points: " + _points;
+        // Each food supplies its configured point value.
+
         
     }
     // STEP 10 -----------------------------------------------------------------
