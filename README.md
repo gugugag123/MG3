@@ -2,16 +2,25 @@
 
 ## Devlog
 
-### 1. Default member-variable values
-The Timer class includes uninitialized public fields named defaultFloat, defaultInt, defaultBool, and defaultString for the Inspector experiment. The default values exposed through Unity serialization are 0 for float, 0 for int, an unchecked box for bool (false), and a blank text field for string. In C#, an uninitialized string field defaults to null; Unity's serialized Inspector displays a blank field and may serialize it as an empty string. A blank Inspector field therefore does not prove that the C# default is an empty string. Editor checks of these serialized fields returned 0, 0, false, and a blank string field.
+### 1. Default Values for Member Variables
 
-### 2. How Update is called
-Unity calls Update automatically once per rendered frame on enabled MonoBehaviour components whose GameObjects are active. My code does not call Update manually. Timer.Update subtracts Time.deltaTime, the elapsed time since the previous frame, so the countdown measures seconds instead of counting frames. The remaining time is clamped at zero.
+I added four public member variables—`float`, `int`, `bool`, and `string`—to the `Timer` class without assigning any initial values. Unity’s serialization check reveals the following: `float` and `int` default to 0, `bool` defaults to `false`, and `string` appears as blank.
 
-### 3. How the timer is used
-TimerText.Start runs once and calls _gameTimer.BeginTimer(_maxGameTime), starting the 30-second game countdown. Each frame, Timer.Update reduces the remaining time, while TimerText.Update reads GetTimeLeft and displays it with one decimal place. TimerText.Update also calls IsFinished. When it returns true, the player is disabled and the GameOver text is shown.
+There is a subtle distinction here: in C#, the default value for a `string` field is actually `null`. The fact that it appears blank in the Inspector does not mean its default value in C# is an empty string.
 
-KickWeapon.ActivateKick starts its own Timer with _lifetimeSeconds (0.2 seconds in the scene). KickWeapon.Update checks IsFinished every frame and deactivates the kick object when time expires. Space uses GetKeyDown so holding the key does not restart the kick timer every frame. Each kicked item passes its configured value to Player.IncreasePoints, which adds that value and refreshes the Points display. Bagels and wine bottles give 1 point, sushi and chicken give 2 points, and steak gives 3 points. The value is serialized on each Kickable component; all eight scene items have been configured.
+### 2. How `Update()` Works
+
+We do not need to call `Update()` ourselves; Unity invokes it automatically every frame, provided that the component is enabled and the `GameObject` to which it is attached is active.
+
+In the `Timer` class, `Update()` subtracts `Time.deltaTime`—the time elapsed between two consecutive frames—during every frame. This ensures the countdown tracks actual elapsed time in seconds, remaining consistent regardless of the computer's frame rate. Once the time reaches 0, it stops decreasing (it does not continue into negative values).
+
+### 3. How the Game Uses the Timer
+
+When the game begins, the `Start()` method in `TimerText` calls `BeginTimer()`, initiating a 30-second countdown. In every subsequent frame, `Timer.Update()` handles the time decrement, while `TimerText.Update()` reads and displays the remaining time. Simultaneously, `IsFinished()` checks whether the time has run out. Once time expires, player controls are disabled, and a "Game Over" screen is displayed.
+
+The kicking mechanic also utilizes its own timer. Whenever a kick is initiated, `KickWeapon` starts a 0.2-second timer, which is then monitored frame-by-frame via `Update()`. Once the time elapses, the kick object is deactivated, preventing the player from remaining in an "attacking" state indefinitely after a single kick. Since `GetKeyDown` is used for the spacebar, holding down the key will not cause the timer to reset repeatedly.
+
+I have also assigned different point values to various food items: 1 point for a bagel or a bottle, 2 points for sushi or chicken, and 3 points for a steak. When an item is struck, it passes its point value to the player’s scoring method, which then updates the score displayed on the screen.
 
 ## Controls
 - Left/right arrows or A/D: move
